@@ -1,5 +1,5 @@
 {
-  "name": "react-use-local-storage",
+  "name": "@devboldly/react-use-local-storage",
   "version": "1.0.3",
   "author": "DevBoldly <devboldly@gmail.com>",
   "description": "React hooks for accessing the localStorage Web Storage API.",

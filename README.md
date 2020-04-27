@@ -50,7 +50,7 @@ Changes to localStorage are synchronized across all hooks automatically.
 ## Installation
 
 ```
-npm i react-use-local-storage
+npm i @devboldly/react-use-local-storage
 ```
 
 ## Quick Start
@@ -60,7 +60,7 @@ npm i react-use-local-storage
 Use the [useLocalStorageString](https://devboldly.github.io/react-use-local-storage/useLocalStorageString) hook:
 
 ```jsx
-import { useLocalStorageString } from 'react-use-local-storage';
+import { useLocalStorageString } from '@devboldly/react-use-local-storage';
 ```
 
 In your function component:
@@ -75,7 +75,7 @@ const [value, setValue] = useLocalStorageString('favColor', defaultValue);
 Use the [useLocalStorageObject](https://devboldly.github.io/react-use-local-storage/useLocalStorageObject) hook:
 
 ```jsx
-import { useLocalStorageObject } from 'react-use-local-storage';
+import { useLocalStorageObject } from '@devboldly/react-use-local-storage';
 ```
 
 In your function component:
@@ -92,7 +92,7 @@ Note that your objects must be compatible with [JSON.stringify()](https://develo
 Use the [useLocalStorageBoolean](https://devboldly.github.io/react-use-local-storage/useLocalStorageBoolean) hook:
 
 ```jsx
-import { useLocalStorageBoolean } from 'react-use-local-storage';
+import { useLocalStorageBoolean } from '@devboldly/react-use-local-storage';
 ```
 
 In your function component:
@@ -107,7 +107,7 @@ const [value, setValue] = useLocalStorageBoolean('swordEquipped', defaultValue);
 Use the [useLocalStorageNumber](https://devboldly.github.io/react-use-local-storage/useLocalStorageNumber) hook:
 
 ```jsx
-import { useLocalStorageNumber } from 'react-use-local-storage';
+import { useLocalStorageNumber } from '@devboldly/react-use-local-storage';
 ```
 
 In your function component:
@@ -124,7 +124,7 @@ If you'd like to store something other than the data types above, define your ow
 Here's a starting point:
 
 ```jsx
-import { useLocalStorageItem } from 'react-use-local-storage';
+import { useLocalStorageItem } from '@devboldly/react-use-local-storage';
 ```
 
 In your function component:
