@@ -50,7 +50,7 @@ Changes to localStorage are synchronized across all hooks automatically.
 ## Installation
 
 ```
-npm i @devboldly/react-use-local-storage
+npm i react-use-local-storage
 ```
 
 ## Quick Start
