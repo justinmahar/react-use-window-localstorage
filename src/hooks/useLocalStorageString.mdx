@@ -1,0 +1,107 @@
+---
+name: useLocalStorageString
+menu: Hooks
+route: /useLocalStorageString
+---
+
+import { UseLocalStorageStringExample } from '../__docz__/components/UseLocalStorageStringExample';
+
+<h1>useLocalStorageString</h1>
+
+## Description
+
+This hook gets and sets a `string` in [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage). 
+
+Features synchronization across hooks sharing the same key name.
+
+## Usage
+
+```jsx
+import { useLocalStorageString } from 'react-use-local-storage';
+```
+
+In your function component:
+
+```jsx
+const [value, setValue] = useLocalStorageString('favColor', 'cyan');
+```
+
+The hook takes a key name and an optional default value argument. The default value will be immediately written to localStorage and returned if no value is present already. Uses `null` when no default value is provided.
+
+### Additional Features
+
+```jsx
+const [value, setValue, loading, reset, restore] = useLocalStorageString('favColor', 'cyan');
+```
+
+- A `loading` value of `true` indicates that the value is being loaded from localStorage.
+- The `reset()` function sets the value back to the provided default, or `null` if none was given.
+- The `restore()` function retrieves the latest value from localStorage. Use this if the localStorage value changes outside of this hook and you need to restore it to the latest.
+
+## Signature
+
+`useLocalStorageString(keyName: string, defaultValue?: string | null) => [string | null, (value: string | null) => void, boolean, () => void, () => void]`
+
+### Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| keyName | `string` | **Required.** Key name to use in localStorage. |
+| defaultValue | `string` &#124; `null` | Optional. Provide a default `string` value when the key's value is not found in localStorage. Will be immediately written to localStorage if not present. Use `null` for no default. |
+
+### Return
+
+The hook returns an array containing:
+
+| Index | Name | Type | Description |
+|-------|------|------|-------------|
+| 0 | value | `string` &#124; `null` | The `string` value from localStorage, when `loading` is `false`. Will be the default value (or `null` if none provided) while loading is `true`. If `null` when not loading, the key was not found in localStorage. |
+| 1 | setValue | `(value: string` &#124; `null) => void` | Sets the value in localStorage. Provide `null` to set it back to the default value. Providing `null` will delete the key from localStorage if the default value is `null`. |
+| 2 | loading | `boolean` | `true` while the value loads from localStorage, `false` otherwise. |
+| 3 | reset | `() => void` | Reset the value to the default. |
+| 4 | restore | `() => void` | Retrieve the latest value from localStorage. Use this if the localStorage value changes outside of this hook and you need to restore it to the latest. |
+
+## Example
+
+<div style={{border: 'solid 2px #67788a', padding: '20px'}}>
+  <UseLocalStorageStringExample />
+</div>
+
+```jsx
+import * as React from 'react';
+import { useLocalStorageString } from 'react-use-local-storage';
+
+export function UseLocalStorageStringExample() {
+  const defaultValue = 'Zelda';
+  const [enteredValue, setEnteredValue] = React.useState('');
+  const [value, setValue, loading, reset] = useLocalStorageString('stringValue', defaultValue);
+  const [value2, setValue2, loading2] = useLocalStorageString('stringValue', defaultValue);
+
+  return (
+    <div>
+      {!loading && (
+        <div>
+          <div>
+            Key "stringValue":{' '}
+            <input
+              type="text"
+              value={enteredValue}
+              onChange={e => setEnteredValue(e.target.value)}
+              onKeyPress={e => e.key === 'Enter' && setValue(enteredValue)}
+            />
+            <button onClick={() => setValue(enteredValue)}>Set</button>
+          </div>
+          <div>
+            <strong>Stored value:</strong> {value}
+          </div>
+        </div>
+      )}
+      <div>
+        <button onClick={() => reset()}>Reset "stringValue" to default</button>
+      </div>
+      <hr />
+      {!loading2 && <div>Another "stringValue" hook (different hook, will synchronize): {value2}</div>}
+    </div>
+  );
+}
+```

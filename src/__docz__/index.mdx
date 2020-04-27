@@ -16,45 +16,144 @@ import githubSvg from '../__docz__/images/github.svg';
 	alignItems: 'center',
 }}>
   <div>
-    <h1>React Library Starter</h1>
+    <h1>React Use Local Storage</h1>
   </div>
   <div>
-    <a href="https://github.com/devboldly/react-library-starter" target="_blank" rel="noopener noreferrer">
+    <a href="https://github.com/devboldly/react-use-local-storage/" target="_blank" rel="noopener noreferrer">
       <SvgIcon src={githubSvg} size={28} style={{ margin: '0 0 0 20px' }} />
     </a>
   </div>
 </div>
 
-**This header will contain a brief description of the project.**
+**React hooks for accessing the localStorage Web Storage API.**
 
-👁️ **[Live Demo](/ExampleComponent#example)**
+👁️ **[Live Demo](/useLocalStorageString#example)**
 
 ## Overview
 
-This section will contain an overview so people can have a high-level understanding of the project.
+A set of hooks to easily store and retrieve data from [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
+
+Encoding is handled for common data types, including [booleans](/useLocalStorageBoolean), [numbers](/useLocalStorageNumber), [strings](/useLocalStorageString), and [objects](/useLocalStorageObject), or you can [encode data yourself](/useLocalStorageItem) if you'd like.
+
+Changes to localStorage are synchronized across all hooks automatically.
+
+> **What is localStorage?** The `localStorage` property allows you to store `{key: value}` string data that is saved across browser sessions. Data stored in `localStorage` has no expiration time.
 
 ### Features include:
 
-- **🚀 List your features, use fun [emojis](https://emojipedia.org/search/?q=rocket)**
-  - Give a little more info on each feature or mention benefits.
+- **💪 Easily add `localStorage` support**
+  - Store data across browser sessions with ease.
+- **🔢 Support for primitives and objects**
+  - Store and retrieve strings, booleans, numbers, and objects effortlessly.
+- **💁 Default values**
+  - Optional support for defaults is baked right in.
+- **🔄 Automatic synchronization**
+  - Changes are synchronized across hooks automatically.
+- **👾 Customizable**
+  - Want to store something unusual? Just provide your own encoder.
+- **💥 Contains Web Storage API side-effects**
+  - Follows React standard practice of containing [side-effects](https://reactjs.org/docs/hooks-effect.html).
 
 ## Installation
 
 ```
-npm i @devboldly/react-library-starter
+npm i @devboldly/react-use-local-storage
 ```
 
 ## Quick Start
 
-This section will contain a copy/paste example so people can get started quickly.
+### Storing Strings
+
+Use the [useLocalStorageString](/useLocalStorageString) hook:
 
 ```jsx
-import { ExampleComponent } from '@devboldly/react-library-starter';
+import { useLocalStorageString } from 'react-use-local-storage';
 ```
 
+In your function component:
+
 ```jsx
-<ExampleComponent text="Example Component"/>
+const defaultValue = 'cyan';
+const [value, setValue] = useLocalStorageString('favColor', defaultValue);
 ```
+
+### Storing Objects
+
+Use the [useLocalStorageObject](/useLocalStorageObject) hook:
+
+```jsx
+import { useLocalStorageObject } from 'react-use-local-storage';
+```
+
+In your function component:
+
+```jsx
+const defaultValue = { a: 'hello', b: 123 };
+const [value, setValue] = useLocalStorageObject('myObj', defaultValue);
+```
+
+Note that your objects must be compatible with [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify). Use [useLocalStorageItem](/useLocalStorageItem) otherwise.
+
+### Storing Booleans
+
+Use the [useLocalStorageBoolean](/useLocalStorageBoolean) hook:
+
+```jsx
+import { useLocalStorageBoolean } from 'react-use-local-storage';
+```
+
+In your function component:
+
+```jsx
+const defaultValue = true;
+const [value, setValue] = useLocalStorageBoolean('swordEquipped', defaultValue);
+```
+
+### Storing Numbers
+
+Use the [useLocalStorageNumber](/useLocalStorageNumber) hook:
+
+```jsx
+import { useLocalStorageNumber } from 'react-use-local-storage';
+```
+
+In your function component:
+
+```jsx
+const defaultValue = 3.14159;
+const [value, setValue] = useLocalStorageNumber('importantNumber', defaultValue);
+```
+
+### Storing Everything Else
+
+If you'd like to store something other than the data types above, define your own encoding using the [useLocalStorageItem](/useLocalStorageItem) hook.
+
+Here's a starting point:
+
+```jsx
+import { useLocalStorageItem } from 'react-use-local-storage';
+```
+
+In your function component:
+
+```jsx
+const defaultValue = 'something custom';
+const encode = value => JSON.stringify(value);
+const decode = itemString => JSON.parse(itemString);
+const [value, setValue] = useLocalStorageItem('name', defaultValue, encode, decode);
+```
+
+### Additional Features
+
+All hooks provide additional features in their return arrays, should you be interested:
+
+```jsx
+const [value, setValue, loading, reset, restore] = useLocalStorageString('favColor', 'cyan');
+```
+
+- A `loading` value of `true` indicates that the value is being loaded from localStorage.
+- The `reset()` function sets the value back to the provided default, or `null` if none was given.
+- The `restore()` function retrieves the latest value from localStorage. Use this if the localStorage value changes outside of this hook and you need to restore it to the latest.
 
 ## TypeScript
 
@@ -68,6 +167,6 @@ For major changes, open an issue first to discuss what you'd like to change.
 
 See the [library template](https://tinyurl.com/ya3k258d) for npm script documentation.
 
-## ⭐ Found It Helpful? [Star It!](https://github.com/devboldly/react-library-starter/stargazers)
+## ⭐ Found It Helpful? [Star It!](https://github.com/devboldly/react-use-local-storage/stargazers)
 
-If you found this project helpful, let the community know by giving it a [star](https://github.com/devboldly/react-library-starter/stargazers): [👉⭐](https://github.com/devboldly/react-library-starter/stargazers)
+If you found this project helpful, let the community know by giving it a [star](https://github.com/devboldly/react-use-local-storage/stargazers): [👉⭐](https://github.com/devboldly/react-use-local-storage/stargazers)

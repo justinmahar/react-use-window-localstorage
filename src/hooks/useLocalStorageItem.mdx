@@ -1,0 +1,126 @@
+---
+name: useLocalStorageItem
+menu: Hooks
+route: /useLocalStorageItem
+---
+
+import { UseLocalStorageItemExample } from '../__docz__/components/UseLocalStorageItemExample';
+
+<h1>useLocalStorageItem</h1>
+
+## Description
+
+This hook gets and sets an item in [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) using the provided encode and decode functions.
+
+Features synchronization across hooks sharing the same key name.
+
+> Hooks for [boolean](/useLocalStorageBoolean), [number](/useLocalStorageNumber), and [string](/useLocalStorageString) primitives are available. There is also a [hook for objects](/useLocalStorageObject) that uses [JSON string encoding](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
+
+## Usage
+
+```jsx
+import { useLocalStorageItem } from 'react-use-local-storage';
+```
+
+In your function component:
+
+```jsx
+const encode = value => JSON.stringify(value);
+const decode = itemString => JSON.parse(itemString);
+const [value, setValue] = useLocalStorageItem('name', 'Zelda', encode, decode);
+```
+
+The hook takes a key name and an optional default value argument. The default value will be immediately written to localStorage and returned if no value is present already. Uses `null` when no default value is provided.
+
+Because localStorage accepts strings only, the value must be encoded and decoded as such using the encode and decode functions you provide.
+
+### Additional Features
+
+```jsx
+const [value, setValue, loading, reset, restore] = useLocalStorageItem('name', 'Zelda', encode, decode);
+```
+
+- A `loading` value of `true` indicates that the value is being loaded from localStorage.
+- The `reset()` function sets the value back to the provided default, or `null` if none was given.
+- The `restore()` function retrieves the latest value from localStorage. Use this if the localStorage value changes outside of this hook and you need to restore it to the latest.
+
+## Signature
+
+`useLocalStorageItem(keyName: string, defaultValue: any | null, encode: (val: any | null) => string, decode: (itemString: string | null) => any | null) => [any | null, (value: any | null) => void, boolean, () => void, () => void]`
+
+### Props
+
+| Prop | Type | Description |
+|------|------|-------------|
+| keyName | `string` | **Required.** Key name to use in localStorage. |
+| defaultValue | `any` &#124; `null` | **Required.** Provide a default value when the key's value is not found in localStorage. Will be immediately written to localStorage if not present. Use `null` for no default. |
+| encode | `(value: any) => string` | **Required.** Encode function for the value. Since localStorage uses strings only, all values must be encoded to a string. |
+| decode | `(itemString: string) => any` | **Required.** Encode function for the item string in localStorage. Since localStorage uses strings only, all values must be decoded from a string. |
+
+### Return
+
+The hook returns an array containing:
+
+| Index | Name | Type | Description |
+|-------|------|------|-------------|
+| 0 | value | `any` &#124; `null` | The value from localStorage, when `loading` is `false`. Will be the default value (or `null` if none provided) while loading is `true`. If `null` when not loading, the key was not found in localStorage. |
+| 1 | setValue | `(value: any` &#124; `null) => void` | Sets the value in localStorage. Provide `null` to set it back to the default value. Providing `null` will delete the key from localStorage if the default value is `null`. |
+| 2 | loading | `boolean` | `true` while the value loads from localStorage, `false` otherwise. |
+| 3 | reset | `() => void` | Reset the value to the default. |
+| 4 | restore | `() => void` | Retrieve the latest value from localStorage. Use this if the localStorage value changes outside of this hook and you need to restore it to the latest. |
+
+## Example
+
+The following example demonstrates a localStorage item with the key name `nameObj` and default `{ name: "Zelda" }` that uses 
+[`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)
+and [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) to
+convert the object to and from a `string` for use in localStorage (the same can be accomplished using [useLocalStorageObject](/useLocalStorageObject)).
+
+A second hook with the same key name is shown as well. This hook will synchronize with the first one when changed.
+
+<div style={{border: 'solid 2px #67788a', padding: '20px'}}>
+  <UseLocalStorageItemExample />
+</div>
+
+```jsx
+import * as React from 'react';
+import { useLocalStorageItem } from 'react-use-local-storage';
+
+export function UseLocalStorageItemExample() {
+  const defaultNameObject = { name: 'Zelda' };
+  const [enteredFirstName, setEnteredFirstName] = React.useState('');
+  const enteredNameObject = { name: enteredFirstName };
+  const encode = value => JSON.stringify(value);
+  const decode = itemString => JSON.parse(itemString);
+  const [nameObject, setNameObject, loading, reset] = useLocalStorageItem('nameObj', defaultNameObject, encode, decode);
+  const [nameObject2, setNameObject2, loading2] = useLocalStorageItem('nameObj', defaultNameObject, encode, decode);
+
+  return (
+    <div>
+      {!loading && (
+        <div>
+          <div>
+            Key "nameObj":{' { name: '}
+            <input
+              type="text"
+              value={enteredFirstName}
+              onChange={e => setEnteredFirstName(e.target.value)}
+              onKeyPress={e => e.key === 'Enter' && setNameObject(enteredNameObject)}
+            />
+            {' } '}
+            <button onClick={() => setNameObject(enteredNameObject)}>Set</button>
+          </div>
+          <div>
+            <strong>Stored name:</strong> {JSON.stringify(nameObject)}
+          </div>
+        </div>
+      )}
+      <div>
+        <button onClick={() => reset()}>Reset "nameObj" to default</button>
+      </div>
+      <hr />
+      {!loading2 && <div>Another "nameObj" hook (different hook, will synchronize): {JSON.stringify(nameObject)}</div>}
+    </div>
+  );
+}
+```
