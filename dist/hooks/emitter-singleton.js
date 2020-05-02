@@ -15,3 +15,4 @@ exports.getEmitterSingleton = function () {
     }
     return emitter;
 };
+exports.clearEvent = 'localStorage clear';

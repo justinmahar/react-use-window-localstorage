@@ -14,6 +14,6 @@
  */
 export declare function useLocalStorageItem<T>(keyName: string, defaultValue: T | null | undefined, encode: (value: T) => string, decode: (itemString: string) => T): LocalStorageItem<T>;
 export declare type LocalStorageValue<T> = T | null;
-export declare type LocalStorageItem<T> = [LocalStorageValue<T>, (value: LocalStorageValue<T>) => void, boolean, () => void, () => void];
+export declare type LocalStorageItem<T> = [LocalStorageValue<T>, (value: LocalStorageValue<T>) => void, boolean, boolean, () => void, () => void];
 export declare function defaultEncode<T>(value: T): string;
 export declare function defaultDecode<T>(itemString: string): T;
