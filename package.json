@@ -1,9 +1,9 @@
 {
-  "name": "@devboldly/react-use-local-storage",
+  "name": "react-use-window-localstorage",
   "version": "1.0.4",
   "author": "DevBoldly <devboldly@gmail.com>",
   "description": "React hooks for accessing the localStorage Web Storage API.",
-  "homepage": "https://github.com/devboldly/react-use-local-storage#readme",
+  "homepage": "https://github.com/devboldly/react-use-window-localstorage#readme",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -27,10 +27,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devboldly/react-use-local-storage.git"
+    "url": "git+https://github.com/devboldly/react-use-window-localstorage.git"
   },
   "bugs": {
-    "url": "https://github.com/devboldly/react-use-local-storage/issues"
+    "url": "https://github.com/devboldly/react-use-window-localstorage/issues"
   },
   "keywords": [],
   "dependencies": {},

@@ -6,7 +6,7 @@ export function UseLocalStorageObjectExample(): JSX.Element {
   const [enteredFirstName, setEnteredFirstName] = React.useState(defaultValue.first);
   const [enteredLastName, setEnteredLastName] = React.useState(defaultValue.last);
   const enteredObj = { first: enteredFirstName, last: enteredLastName };
-  const [value, setValue, loading, reset] = useLocalStorageObject('objValue', defaultValue);
+  const [value, setValue, loading, available, reset] = useLocalStorageObject('objValue', defaultValue);
   const [value2, setValue2, loading2] = useLocalStorageObject('objValue', defaultValue);
 
   return (

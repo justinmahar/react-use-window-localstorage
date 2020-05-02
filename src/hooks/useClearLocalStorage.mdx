@@ -1,0 +1,103 @@
+---
+name: useClearLocalStorage
+menu: Hooks
+route: /useClearLocalStorage
+---
+
+import { UseClearExample } from '../__docz__/components/UseClearExample';
+
+<h1>useClearLocalStorage</h1>
+
+## Description
+
+This hook calls [localStorage.clear()](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) to clear all items from `localStorage`. 
+
+All hooks will be reset back to their default values, or to `null` if none was provided.
+
+## Usage
+
+```jsx
+import { useClearLocalStorage } from 'react-use-window-localstorage';
+```
+
+In your function component:
+
+```jsx
+const clearLocalStorage = useClearLocalStorage();
+```
+
+Call `clearLocalStorage()` to clear localStorage.
+
+## Signature
+
+`useClearLocalStorage() => (() => void)`
+
+### Props
+
+The hook takes no props.
+
+### Return
+
+The hook returns a function, `clearLocalStorage`:
+
+```jsx
+clearLocalStorage() => void
+```
+
+Calling this function clears localStorage and synchronizes all hooks.
+
+## Example
+
+In the following example, four numbers are defaulted to `0` and can be set to randomly generated values. The fifth value has no default. Calling `clearLocalStorage()` will clear
+localStorage using `localStorage.clear()` and synchronize all hooks.
+
+<div style={{border: 'solid 2px #67788a', padding: '20px'}}>
+  <UseClearExample />
+</div>
+
+```jsx
+import * as React from 'react';
+import { useClearLocalStorage, useLocalStorageNumber } from 'react-use-window-localstorage';
+
+export function UseClearExample() {
+  const [val1, setVal1] = useLocalStorageNumber('val1', 0);
+  const [val2, setVal2] = useLocalStorageNumber('val2', 0);
+  const [val3, setVal3] = useLocalStorageNumber('val3', 0);
+  const [val4, setVal4] = useLocalStorageNumber('val4', 0);
+  const [val5, setVal5] = useLocalStorageNumber('val5');
+  const clearLocalStorage = useClearLocalStorage();
+
+  return (
+    <div>
+      <div>
+        <div>
+          <strong>Stored values:</strong>
+          <ul>
+            <li>val1: {val1}</li>
+            <li>val2: {val2}</li>
+            <li>val3: {val3}</li>
+            <li>val4: {val4}</li>
+            <li>val5 (no default): {val5}</li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <button
+          onClick={() => {
+            setVal1(Math.random());
+            setVal2(Math.random());
+            setVal3(Math.random());
+            setVal4(Math.random());
+            setVal5(Math.random());
+          }}
+        >
+          Generate Random Values
+        </button>
+      </div>
+      <div>
+        <button onClick={() => clearLocalStorage()}>Clear</button>
+      </div>
+    </div>
+  );
+}
+```

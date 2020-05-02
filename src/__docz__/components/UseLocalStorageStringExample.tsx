@@ -4,7 +4,7 @@ import { useLocalStorageString } from '../../hooks/useLocalStorageString';
 export function UseLocalStorageStringExample(): JSX.Element {
   const defaultValue = 'Zelda';
   const [enteredValue, setEnteredValue] = React.useState('');
-  const [value, setValue, loading, reset] = useLocalStorageString('stringValue', defaultValue);
+  const [value, setValue, loading, available, reset] = useLocalStorageString('stringValue', defaultValue);
   const [value2, setValue2, loading2] = useLocalStorageString('stringValue', defaultValue);
 
   return (

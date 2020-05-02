@@ -7,7 +7,12 @@ export function UseLocalStorageItemExample(): JSX.Element {
   const enteredNameObject = { name: enteredFirstName };
   const encode = value => JSON.stringify(value);
   const decode = itemString => JSON.parse(itemString);
-  const [nameObject, setNameObject, loading, reset] = useLocalStorageItem('nameObj', defaultNameObject, encode, decode);
+  const [nameObject, setNameObject, loading, available, reset] = useLocalStorageItem(
+    'nameObj',
+    defaultNameObject,
+    encode,
+    decode
+  );
   const [nameObject2, setNameObject2, loading2] = useLocalStorageItem('nameObj', defaultNameObject, encode, decode);
 
   return (

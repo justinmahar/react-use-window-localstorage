@@ -1,5 +1,5 @@
 /** Name of your repository */
-const repoName = 'react-use-local-storage';
+const repoName = 'react-use-window-localstorage';
 /** URL to public assets such as images */
 const publicUrl = `/${repoName}/public`;
 

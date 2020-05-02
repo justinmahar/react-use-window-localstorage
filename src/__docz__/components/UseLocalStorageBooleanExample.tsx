@@ -3,7 +3,7 @@ import { useLocalStorageBoolean } from '../../hooks/useLocalStorageBoolean';
 
 export function UseLocalStorageBooleanExample(): JSX.Element {
   const defaultValue = true;
-  const [value, setValue, loading, reset] = useLocalStorageBoolean('boolValue', defaultValue);
+  const [value, setValue, loading, available, reset] = useLocalStorageBoolean('boolValue', defaultValue);
   const [value2, setValue2, loading2] = useLocalStorageBoolean('boolValue', defaultValue);
 
   return (

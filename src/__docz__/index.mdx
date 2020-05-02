@@ -16,10 +16,10 @@ import githubSvg from '../__docz__/images/github.svg';
 	alignItems: 'center',
 }}>
   <div>
-    <h1>React Use Local Storage</h1>
+    <h1>React Use Window localStorage</h1>
   </div>
   <div>
-    <a href="https://github.com/devboldly/react-use-local-storage/" target="_blank" rel="noopener noreferrer">
+    <a href="https://github.com/devboldly/react-use-window-localstorage/" target="_blank" rel="noopener noreferrer">
       <SvgIcon src={githubSvg} size={28} style={{ margin: '0 0 0 20px' }} />
     </a>
   </div>
@@ -51,13 +51,15 @@ Changes to localStorage are synchronized across all hooks automatically.
   - Changes are synchronized across hooks automatically.
 - **👾 Customizable**
   - Want to store something unusual? Just provide your own encoder.
-- **💥 Contains Web Storage API side-effects**
-  - Follows React standard practice of containing [side-effects](https://reactjs.org/docs/hooks-effect.html).
+- **⛔ Storage availability detection**
+  - Detects if `localStorage` is available for use and lets you know otherwise.
+- **🧼 Clearing support**
+  - Clear all localStorage values and reset hooks to defaults with one simple call.
 
 ## Installation
 
 ```
-npm i @devboldly/react-use-local-storage
+npm i react-use-window-localstorage
 ```
 
 ## Quick Start
@@ -67,7 +69,7 @@ npm i @devboldly/react-use-local-storage
 Use the [useLocalStorageString](/useLocalStorageString) hook:
 
 ```jsx
-import { useLocalStorageString } from '@devboldly/react-use-local-storage';
+import { useLocalStorageString } from 'react-use-window-localstorage';
 ```
 
 In your function component:
@@ -82,7 +84,7 @@ const [value, setValue] = useLocalStorageString('favColor', defaultValue);
 Use the [useLocalStorageObject](/useLocalStorageObject) hook:
 
 ```jsx
-import { useLocalStorageObject } from '@devboldly/react-use-local-storage';
+import { useLocalStorageObject } from 'react-use-window-localstorage';
 ```
 
 In your function component:
@@ -99,7 +101,7 @@ Note that your objects must be compatible with [JSON.stringify()](https://develo
 Use the [useLocalStorageBoolean](/useLocalStorageBoolean) hook:
 
 ```jsx
-import { useLocalStorageBoolean } from '@devboldly/react-use-local-storage';
+import { useLocalStorageBoolean } from 'react-use-window-localstorage';
 ```
 
 In your function component:
@@ -114,7 +116,7 @@ const [value, setValue] = useLocalStorageBoolean('swordEquipped', defaultValue);
 Use the [useLocalStorageNumber](/useLocalStorageNumber) hook:
 
 ```jsx
-import { useLocalStorageNumber } from '@devboldly/react-use-local-storage';
+import { useLocalStorageNumber } from 'react-use-window-localstorage';
 ```
 
 In your function component:
@@ -124,6 +126,8 @@ const defaultValue = 3.14159;
 const [value, setValue] = useLocalStorageNumber('importantNumber', defaultValue);
 ```
 
+> Note: All value defaults are optional. Hooks will return `null` if none is provided.
+
 ### Storing Everything Else
 
 If you'd like to store something other than the data types above, define your own encoding using the [useLocalStorageItem](/useLocalStorageItem) hook.
@@ -131,7 +135,7 @@ If you'd like to store something other than the data types above, define your ow
 Here's a starting point:
 
 ```jsx
-import { useLocalStorageItem } from '@devboldly/react-use-local-storage';
+import { useLocalStorageItem } from 'react-use-window-localstorage';
 ```
 
 In your function component:
@@ -143,17 +147,33 @@ const decode = itemString => JSON.parse(itemString);
 const [value, setValue] = useLocalStorageItem('name', defaultValue, encode, decode);
 ```
 
+Provide `null` for no default value.
+
 ### Additional Features
 
 All hooks provide additional features in their return arrays, should you be interested:
 
 ```jsx
-const [value, setValue, loading, reset, restore] = useLocalStorageString('favColor', 'cyan');
+const [value, setValue, loading, available, reset, restore] = useLocalStorageString('favColor', 'cyan');
 ```
 
 - A `loading` value of `true` indicates that the value is being loaded from localStorage.
+- An `available` value of `true` indicates that `localStorage` is supported and available for use. 
 - The `reset()` function sets the value back to the provided default, or `null` if none was given.
 - The `restore()` function retrieves the latest value from localStorage. Use this if the localStorage value changes outside of this hook and you need to restore it to the latest.
+
+### Clearing `localStorage`
+
+```jsx
+import { useClear } from 'react-use-window-localstorage';
+```
+
+```jsx
+const clearLocalStorage = useClearLocalStorage();
+```
+
+Call `clearLocalStorage()` to clear all values in localStorage using [localStorage.clear()](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) 
+and reset all hooks to their defaults (or `null` if none provided).
 
 ## TypeScript
 
@@ -167,6 +187,6 @@ For major changes, open an issue first to discuss what you'd like to change.
 
 See the [library template](https://tinyurl.com/ya3k258d) for npm script documentation.
 
-## ⭐ Found It Helpful? [Star It!](https://github.com/devboldly/react-use-local-storage/stargazers)
+## ⭐ Found It Helpful? [Star It!](https://github.com/devboldly/react-use-window-localstorage/stargazers)
 
-If you found this project helpful, let the community know by giving it a [star](https://github.com/devboldly/react-use-local-storage/stargazers): [👉⭐](https://github.com/devboldly/react-use-local-storage/stargazers)
+If you found this project helpful, let the community know by giving it a [star](https://github.com/devboldly/react-use-window-localstorage/stargazers): [👉⭐](https://github.com/devboldly/react-use-window-localstorage/stargazers)

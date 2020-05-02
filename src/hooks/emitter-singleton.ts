@@ -14,3 +14,5 @@ export const getEmitterSingleton = (): EventEmitter => {
   }
   return emitter;
 };
+
+export const clearEvent = 'localStorage clear';

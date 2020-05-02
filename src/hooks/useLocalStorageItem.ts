@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { getEmitterSingleton } from './emitter-singleton';
+import { getEmitterSingleton, clearEvent } from './emitter-singleton';
+import isStorageAvailable from './isStorageAvailable';
 
 /**
- * See documentation: https://devboldly.github.io/react-use-local-storage/useLocalStorageItem
+ * See documentation: https://devboldly.github.io/react-use-window-localstorage/useLocalStorageItem
  *
  * This hook gets and sets an item in [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) using the provided encode and decode functions.
  *
  * Features synchronization across hooks sharing the same key name.
  *
- * Hooks for [boolean](https://devboldly.github.io/react-use-local-storage/useLocalStorageBoolean), [number](https://devboldly.github.io/react-use-local-storage/useLocalStorageNumber), and [string](https://devboldly.github.io/react-use-local-storage/useLocalStorageString) primitives are available. There is also a [hook for objects](https://devboldly.github.io/react-use-local-storage/useLocalStorageObject) that uses [JSON string encoding](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
+ * Hooks for [boolean](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageBoolean), [number](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageNumber), and [string](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageString) primitives are available. There is also a [hook for objects](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageObject) that uses [JSON string encoding](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
  *
  * @param keyName - **Required.** Key name to use in localStorage.
  * @param defaultValueOptional - **Required.** Provide a default value when the key's value is not found in localStorage. Will be immediately written to localStorage if not present. Use `null` for no default.
@@ -25,40 +26,46 @@ export function useLocalStorageItem<T>(
   const [shouldPush, setShouldPush] = React.useState<boolean>(false);
   const [shouldPull, setShouldPull] = React.useState<boolean>(false);
   const [value, setItemValue] = React.useState<LocalStorageValue<T>>(defaultValue);
+  const [available, setAvailable] = React.useState(true);
 
   React.useEffect(() => {
-    if (typeof localStorage !== 'undefined') {
-      const retrievedLocalStorageState = localStorage.getItem(keyName);
-      // Synchronize value with localStorage on first render
-      if (loading) {
-        setLoading(false);
-        try {
-          // If on first render we actually find a value, pull it.
-          if (retrievedLocalStorageState !== null) {
-            setShouldPull(true);
+    // Synchronize value with localStorage on first render
+    if (loading) {
+      setLoading(false);
+      // Make sure localStorage is actually available
+      if (isStorageAvailable()) {
+        // Get the item
+        const retrievedLocalStorageState = localStorage.getItem(keyName);
+        // If on first render we actually find a value, use it.
+        if (retrievedLocalStorageState !== null) {
+          try {
+            // Set to decoded value, or fall back to default when null
+            setItemValue(retrievedLocalStorageState !== null ? decode(retrievedLocalStorageState) : defaultValue);
+          } catch (e) {
+            console.error(e);
           }
-          // Else if we didn't find a value but a default one was provided, push it.
-          else if (defaultValue !== null) {
-            setItemValue(defaultValue);
-            setShouldPush(true);
-          }
-        } catch (e) {
-          console.error(e);
         }
+        // Else if we didn't find a value but a default one was provided, push it.
+        else if (defaultValue !== null) {
+          setShouldPush(true);
+        }
+        // And set to the default value
+        setItemValue(defaultValue);
+      } else {
+        setAvailable(false);
       }
     }
-  }, [keyName, loading, defaultValue]);
+  }, [keyName, loading, defaultValue, decode, available]);
 
   React.useEffect(() => {
-    if (typeof localStorage !== 'undefined') {
-      const retrievedLocalStorageState = localStorage.getItem(keyName);
+    if (!loading) {
       // Pull value from localStorage
       if (shouldPull) {
-        setShouldPull(false);
         try {
-          // Fall back to default when null
-          const newVal = retrievedLocalStorageState !== null ? decode(retrievedLocalStorageState) : defaultValue;
-          setItemValue(newVal);
+          const retrievedLocalStorageState = localStorage.getItem(keyName);
+          setShouldPull(false);
+          // Set to decoded value, or fall back to default when null
+          setItemValue(retrievedLocalStorageState !== null ? decode(retrievedLocalStorageState) : defaultValue);
         } catch (e) {
           console.error(e);
         }
@@ -74,11 +81,12 @@ export function useLocalStorageItem<T>(
             console.error(e);
           }
         } else {
+          // Remove when setting to null
           localStorage.removeItem(keyName);
         }
       }
     }
-  }, [keyName, shouldPull, shouldPush, decode, defaultValue, value, encode]);
+  }, [keyName, shouldPull, shouldPush, decode, defaultValue, value, encode, available, loading]);
 
   // Emitter handler (synchronizes hooks)
   React.useEffect(() => {
@@ -88,23 +96,28 @@ export function useLocalStorageItem<T>(
         setItemValue(value);
       }
     };
+    const clearListener = (): void => {
+      if (!aborted) {
+        setLoading(true);
+      }
+    };
     getEmitterSingleton().on(keyName, itemChangeListener);
+    getEmitterSingleton().on(clearEvent, clearListener);
     return () => {
       getEmitterSingleton().off(keyName, itemChangeListener);
+      getEmitterSingleton().off(clearEvent, clearListener);
       aborted = true;
     };
   });
 
   const setValue = React.useCallback(
     (newVal: LocalStorageValue<T>): void => {
-      if (typeof localStorage !== 'undefined') {
-        const newValOrDefault = newVal !== null ? newVal : defaultValue;
-        setItemValue(newValOrDefault);
-        setShouldPush(true);
-        getEmitterSingleton().emit(keyName, newVal);
-      }
+      const newValOrDefault = newVal !== null ? newVal : defaultValue;
+      setItemValue(newValOrDefault);
+      setShouldPush(true);
+      getEmitterSingleton().emit(keyName, newVal);
     },
-    [defaultValue, keyName, setItemValue, setShouldPush]
+    [defaultValue, keyName]
   );
 
   const restore = React.useCallback((): void => {
@@ -115,13 +128,14 @@ export function useLocalStorageItem<T>(
     setValue(defaultValue);
   }, [defaultValue, setValue]);
 
-  return [value, setValue, loading, reset, restore];
+  return [value, setValue, loading, available, reset, restore];
 }
 export type LocalStorageValue<T> = T | null;
 
 export type LocalStorageItem<T> = [
   LocalStorageValue<T>,
   (value: LocalStorageValue<T>) => void,
+  boolean,
   boolean,
   () => void,
   () => void

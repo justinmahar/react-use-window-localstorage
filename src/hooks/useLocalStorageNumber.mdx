@@ -17,7 +17,7 @@ Features synchronization across hooks sharing the same key name.
 ## Usage
 
 ```jsx
-import { useLocalStorageNumber } from '@devboldly/react-use-local-storage';
+import { useLocalStorageNumber } from 'react-use-window-localstorage';
 ```
 
 In your function component:
@@ -28,17 +28,22 @@ const [value, setValue] = useLocalStorageNumber('pi', 3.14159);
 
 The hook takes a key name and an optional default value argument. The default value will be immediately written to localStorage and returned if no value is present already. Uses `null` when no default value is provided.
 
+Use `value` and `setValue` to read and write the value.
+
 Because localStorage accepts strings only, the value is encoded using 
 [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) 
 and decoded using [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse).
 
 ### Additional Features
 
+The hook provides additional features in its return array, should you be interested:
+
 ```jsx
-const [value, setValue, loading, reset, restore] = useLocalStorageNumber('pi', 3.14159);
+const [value, setValue, loading, available, reset, restore] = useLocalStorageNumber('pi', 3.14159);
 ```
 
 - A `loading` value of `true` indicates that the value is being loaded from localStorage.
+- An `available` value of `true` indicates that `localStorage` is supported and available for use. 
 - The `reset()` function sets the value back to the provided default, or `null` if none was given.
 - The `restore()` function retrieves the latest value from localStorage. Use this if the localStorage value changes outside of this hook and you need to restore it to the latest.
 
@@ -62,8 +67,9 @@ The hook returns an array containing:
 | 0 | value | `number` &#124; `null` | The `number` value from localStorage, when `loading` is `false`. Will be the default value (or `null` if none provided) while loading is `true`. If `null` when not loading, the key was not found in localStorage. |
 | 1 | setValue | `(value: number` &#124; `null) => void` | Sets the value in localStorage. Provide `null` to set it back to the default value. Providing `null` will delete the key from localStorage if the default value is `null`. |
 | 2 | loading | `boolean` | `true` while the value loads from localStorage, `false` otherwise. |
-| 3 | reset | `() => void` | Reset the value to the default. |
-| 4 | restore | `() => void` | Retrieve the latest value from localStorage. Use this if the localStorage value changes outside of this hook and you need to restore it to the latest. |
+| 3 | available | `boolean` | `true` if localStorage is supported and available for use, `false` otherwise. |
+| 4 | reset | `() => void` | Reset the value to the default. |
+| 5 | restore | `() => void` | Retrieve the latest value from localStorage. Use this if the localStorage value changes outside of this hook and you need to restore it to the latest. |
 
 ## Example
 
@@ -73,12 +79,12 @@ The hook returns an array containing:
 
 ```jsx
 import * as React from 'react';
-import { useLocalStorageNumber } from '@devboldly/react-use-local-storage';
+import { useLocalStorageNumber } from 'react-use-window-localstorage';
 
 export function UseLocalStorageNumberExample() {
   const defaultValue = 3.14159;
   const [enteredValue, setEnteredValue] = React.useState('');
-  const [value, setValue, loading, reset] = useLocalStorageNumber('numValue', defaultValue);
+  const [value, setValue, loading, available, reset] = useLocalStorageNumber('numValue', defaultValue);
   const [value2, setValue2, loading2] = useLocalStorageNumber('numValue', defaultValue);
 
   return (

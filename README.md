@@ -1,32 +1,32 @@
 <h2 align="center">
-  <a href="https://github.com/devboldly/react-use-local-storage">React Local Storage Hook</a>
+  <a href="https://github.com/devboldly/react-use-window-localstorage">React Use Window localStorage</a>
 </h2>
 <h3 align="center">
   React hooks for accessing the localStorage Web Storage API.
 </h3>
 <p align="center">
-  <a href="https://badge.fury.io/js/%40devboldly%2Freact-use-local-storage">
-    <img src="https://badge.fury.io/js/%40devboldly%2Freact-use-local-storage.svg" alt="npm Version"/>
+  <a href="https://badge.fury.io/js/react-use-window-localstorage">
+    <img src="https://badge.fury.io/js/react-use-window-localstorage.svg" alt="npm Version"/>
   </a>
-  <a href="https://github.com/devboldly/react-use-local-storage/actions?query=workflow%3ATests">
-    <img src="https://github.com/devboldly/react-use-local-storage/workflows/Tests/badge.svg" alt="Tests Status"/>
+  <a href="https://github.com/devboldly/react-use-window-localstorage/actions?query=workflow%3ATests">
+    <img src="https://github.com/devboldly/react-use-window-localstorage/workflows/Tests/badge.svg" alt="Tests Status"/>
   </a>
-  <a href="https://github.com/devboldly/react-use-local-storage/actions?query=workflow%3ADeploy">
-    <img src="https://github.com/devboldly/react-use-local-storage/workflows/Deploy/badge.svg" alt="Deploy Status"/>
+  <a href="https://github.com/devboldly/react-use-window-localstorage/actions?query=workflow%3ADeploy">
+    <img src="https://github.com/devboldly/react-use-window-localstorage/workflows/Deploy/badge.svg" alt="Deploy Status"/>
   </a>
 </p>
 
 ## Documentation
 
-Read the **[official documentation](https://devboldly.github.io/react-use-local-storage/)**.
+Read the **[official documentation](https://devboldly.github.io/react-use-window-localstorage/)**.
 
-👁️ **[Live Demo](https://devboldly.github.io/react-use-local-storage/useLocalStorageString#example)**
+👁️ **[Live Demo](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageString#example)**
 
 ## Overview
 
 A set of hooks to easily store and retrieve data from [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
 
-Encoding is handled for common data types, including [booleans](https://devboldly.github.io/react-use-local-storage/useLocalStorageBoolean), [numbers](https://devboldly.github.io/react-use-local-storage/useLocalStorageNumber), [strings](https://devboldly.github.io/react-use-local-storage/useLocalStorageString), and [objects](https://devboldly.github.io/react-use-local-storage/useLocalStorageObject), or you can [encode data yourself](https://devboldly.github.io/react-use-local-storage/useLocalStorageItem) if you'd like.
+Encoding is handled for common data types, including [booleans](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageBoolean), [numbers](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageNumber), [strings](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageString), and [objects](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageObject), or you can [encode data yourself](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageItem) if you'd like.
 
 Changes to localStorage are synchronized across all hooks automatically.
 
@@ -44,23 +44,25 @@ Changes to localStorage are synchronized across all hooks automatically.
   - Changes are synchronized across hooks automatically.
 - **👾 Customizable**
   - Want to store something unusual? Just provide your own encoder.
-- **💥 Contains Web Storage API side-effects**
-  - Follows React standard practice of containing [side-effects](https://reactjs.org/docs/hooks-effect.html).
+- **⛔ Storage availability detection**
+  - Detects if `localStorage` is available for use and lets you know otherwise.
+- **🧼 Clearing support**
+  - Clear all localStorage values and reset hooks to defaults with one simple call.
 
 ## Installation
 
 ```
-npm i @devboldly/react-use-local-storage
+npm i react-use-window-localstorage
 ```
 
 ## Quick Start
 
 ### Storing Strings
 
-Use the [useLocalStorageString](https://devboldly.github.io/react-use-local-storage/useLocalStorageString) hook:
+Use the [useLocalStorageString](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageString) hook:
 
 ```jsx
-import { useLocalStorageString } from '@devboldly/react-use-local-storage';
+import { useLocalStorageString } from 'react-use-window-localstorage';
 ```
 
 In your function component:
@@ -72,10 +74,10 @@ const [value, setValue] = useLocalStorageString('favColor', defaultValue);
 
 ### Storing Objects
 
-Use the [useLocalStorageObject](https://devboldly.github.io/react-use-local-storage/useLocalStorageObject) hook:
+Use the [useLocalStorageObject](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageObject) hook:
 
 ```jsx
-import { useLocalStorageObject } from '@devboldly/react-use-local-storage';
+import { useLocalStorageObject } from 'react-use-window-localstorage';
 ```
 
 In your function component:
@@ -85,14 +87,14 @@ const defaultValue = { a: 'hello', b: 123 };
 const [value, setValue] = useLocalStorageObject('myObj', defaultValue);
 ```
 
-Note that your objects must be compatible with [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify). Use [useLocalStorageItem](https://devboldly.github.io/react-use-local-storage/useLocalStorageItem) otherwise.
+Note that your objects must be compatible with [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify). Use [useLocalStorageItem](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageItem) otherwise.
 
 ### Storing Booleans
 
-Use the [useLocalStorageBoolean](https://devboldly.github.io/react-use-local-storage/useLocalStorageBoolean) hook:
+Use the [useLocalStorageBoolean](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageBoolean) hook:
 
 ```jsx
-import { useLocalStorageBoolean } from '@devboldly/react-use-local-storage';
+import { useLocalStorageBoolean } from 'react-use-window-localstorage';
 ```
 
 In your function component:
@@ -104,10 +106,10 @@ const [value, setValue] = useLocalStorageBoolean('swordEquipped', defaultValue);
 
 ### Storing Numbers
 
-Use the [useLocalStorageNumber](https://devboldly.github.io/react-use-local-storage/useLocalStorageNumber) hook:
+Use the [useLocalStorageNumber](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageNumber) hook:
 
 ```jsx
-import { useLocalStorageNumber } from '@devboldly/react-use-local-storage';
+import { useLocalStorageNumber } from 'react-use-window-localstorage';
 ```
 
 In your function component:
@@ -117,14 +119,16 @@ const defaultValue = 3.14159;
 const [value, setValue] = useLocalStorageNumber('importantNumber', defaultValue);
 ```
 
+> Note: All value defaults are optional. Hooks will return `null` if none is provided.
+
 ### Storing Everything Else
 
-If you'd like to store something other than the data types above, define your own encoding using the [useLocalStorageItem](https://devboldly.github.io/react-use-local-storage/useLocalStorageItem) hook.
+If you'd like to store something other than the data types above, define your own encoding using the [useLocalStorageItem](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageItem) hook.
 
 Here's a starting point:
 
 ```jsx
-import { useLocalStorageItem } from '@devboldly/react-use-local-storage';
+import { useLocalStorageItem } from 'react-use-window-localstorage';
 ```
 
 In your function component:
@@ -136,17 +140,33 @@ const decode = itemString => JSON.parse(itemString);
 const [value, setValue] = useLocalStorageItem('name', defaultValue, encode, decode);
 ```
 
+Provide `null` for no default value.
+
 ### Additional Features
 
 All hooks provide additional features in their return arrays, should you be interested:
 
 ```jsx
-const [value, setValue, loading, reset, restore] = useLocalStorageString('favColor', 'cyan');
+const [value, setValue, loading, available, reset, restore] = useLocalStorageString('favColor', 'cyan');
 ```
 
 - A `loading` value of `true` indicates that the value is being loaded from localStorage.
+- An `available` value of `true` indicates that `localStorage` is supported and available for use. 
 - The `reset()` function sets the value back to the provided default, or `null` if none was given.
 - The `restore()` function retrieves the latest value from localStorage. Use this if the localStorage value changes outside of this hook and you need to restore it to the latest.
+
+### Clearing `localStorage`
+
+```jsx
+import { useClear } from 'react-use-window-localstorage';
+```
+
+```jsx
+const clearLocalStorage = useClearLocalStorage();
+```
+
+Call `clearLocalStorage()` to clear all values in localStorage using [localStorage.clear()](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) 
+and reset all hooks to their defaults (or `null` if none provided).
 
 ## TypeScript
 
@@ -164,9 +184,9 @@ For major changes, open an issue first to discuss what you'd like to change.
 
 See the [library template](https://tinyurl.com/ya3k258d) for npm script documentation.
 
-## ⭐ Found It Helpful? [Star It!](https://github.com/devboldly/react-use-local-storage/stargazers)
+## ⭐ Found It Helpful? [Star It!](https://github.com/devboldly/react-use-window-localstorage/stargazers)
 
-If you found this project helpful, let the community know by giving it a [star](https://github.com/devboldly/react-use-local-storage/stargazers): [👉⭐](https://github.com/devboldly/react-use-local-storage/stargazers)
+If you found this project helpful, let the community know by giving it a [star](https://github.com/devboldly/react-use-window-localstorage/stargazers): [👉⭐](https://github.com/devboldly/react-use-window-localstorage/stargazers)
 
 ## MIT License
 

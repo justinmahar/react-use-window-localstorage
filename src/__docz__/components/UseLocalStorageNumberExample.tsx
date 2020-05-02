@@ -4,7 +4,7 @@ import { useLocalStorageNumber } from '../../hooks/useLocalStorageNumber';
 export function UseLocalStorageNumberExample(): JSX.Element {
   const defaultValue = 3.14159;
   const [enteredValue, setEnteredValue] = React.useState('');
-  const [value, setValue, loading, reset] = useLocalStorageNumber('numValue', defaultValue);
+  const [value, setValue, loading, available, reset] = useLocalStorageNumber('numValue', defaultValue);
   const [value2, setValue2, loading2] = useLocalStorageNumber('numValue', defaultValue);
 
   return (

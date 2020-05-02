@@ -3,6 +3,7 @@ import { useLocalStorageBoolean } from '../hooks/useLocalStorageBoolean';
 import { useLocalStorageNumber } from '../hooks/useLocalStorageNumber';
 import { useLocalStorageObject } from '../hooks/useLocalStorageObject';
 import { useLocalStorageString } from '../hooks/useLocalStorageString';
+import { useClearLocalStorage } from '../hooks/useClearLocalStorage';
 
 // Learn how to write stories:
 // https://storybook.js.org/docs/basics/writing-stories/
@@ -20,45 +21,77 @@ export default {
 // Needed to wrap the hook and give it visual representation.
 const HookComponent = () => {
   const defaultCheese = 'Cheddar';
-  const [favCheese, setFavCheese, favCheeseLoading, resetFavCheese, restoreFavCheese] = useLocalStorageString(
-    'favCheese',
-    defaultCheese
-  );
-  const [favCheese2, setFavCheese2, favCheese2Loading, resetFavCheese2, restoreFavCheese2] = useLocalStorageString(
-    'favCheese',
-    defaultCheese
-  );
-  const [favCheese3, setFavCheese3, favCheese3Loading, resetFavCheese3, restoreFavCheese3] = useLocalStorageString(
-    'favCheese',
-    defaultCheese
-  );
+  const [
+    favCheese,
+    setFavCheese,
+    favCheeseLoading,
+    favCheeseAvailable,
+    resetFavCheese,
+    restoreFavCheese,
+  ] = useLocalStorageString('favCheese', defaultCheese);
+  const [
+    favCheese2,
+    setFavCheese2,
+    favCheese2Loading,
+    favCheese2Available,
+    resetFavCheese2,
+    restoreFavCheese2,
+  ] = useLocalStorageString('favCheese', defaultCheese);
+  const [
+    favCheese3,
+    setFavCheese3,
+    favCheese3Loading,
+    favCheese3Available,
+    resetFavCheese3,
+    restoreFavCheese3,
+  ] = useLocalStorageString('favCheese', defaultCheese);
 
-  const [favAnimal, setFavAnimal, favAnimalLoading, resetFavAnimal, restoreFavAnimal] = useLocalStorageString(
-    'favAnimal'
-  );
-  const [numChickens, setNumChickens, numChickensLoading, resetNumChickens, restoreNumChickens] = useLocalStorageNumber(
-    'numChickens',
-    3
-  );
-  const [isAwesome, setIsAwesome, isAwesomeLoading, resetIsAwesome, restoreIsAwesome] = useLocalStorageBoolean(
-    'isAwesome',
-    true
-  );
-  const [inventory, setInventory, inventoryLoading, resetInventory, restoreInventory] = useLocalStorageObject(
-    'inventory',
-    {
-      books: [
-        { title: 'Adventures of Link', ISBN: '123-4123-123' },
-        { title: 'Potion Recipes', ISBN: '39138-23923-23' },
-      ],
-      swordCount: 1,
-      inventoryFull: false,
-      owner: 'Zelda',
-    }
-  );
+  const [
+    favAnimal,
+    setFavAnimal,
+    favAnimalLoading,
+    favAnimalAvailable,
+    resetFavAnimal,
+    restoreFavAnimal,
+  ] = useLocalStorageString('favAnimal');
+  const [
+    numChickens,
+    setNumChickens,
+    numChickensLoading,
+    numChickensAvailable,
+    resetNumChickens,
+    restoreNumChickens,
+  ] = useLocalStorageNumber('numChickens', 3);
+  const [
+    isAwesome,
+    setIsAwesome,
+    isAwesomeLoading,
+    isAwesomeAvailable,
+    resetIsAwesome,
+    restoreIsAwesome,
+  ] = useLocalStorageBoolean('isAwesome', true);
+  const [
+    inventory,
+    setInventory,
+    inventoryLoading,
+    inventoryAvailable,
+    resetInventory,
+    restoreInventory,
+  ] = useLocalStorageObject('inventory', {
+    books: [
+      { title: 'Adventures of Link', ISBN: '123-4123-123' },
+      { title: 'Potion Recipes', ISBN: '39138-23923-23' },
+    ],
+    swordCount: 1,
+    inventoryFull: false,
+    owner: 'Zelda',
+  });
+
+  const clearLocalStorage = useClearLocalStorage();
 
   return (
     <>
+      <div>localStorage Available: {favCheeseAvailable + ''}</div>
       <div>
         Favorite Cheese (default Cheddar): {favCheeseLoading ? 'Loading...' : favCheese ? favCheese : <code>null</code>}
       </div>
@@ -190,6 +223,9 @@ const HookComponent = () => {
             Reset All
           </button>{' '}
         </p>
+      </div>
+      <div>
+        Clear all using hook (synchronizes): <button onClick={e => clearLocalStorage()}>Clear</button>
       </div>
       <div>
         <p>

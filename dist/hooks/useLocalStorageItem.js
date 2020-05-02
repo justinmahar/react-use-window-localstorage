@@ -10,13 +10,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(require("react"));
 var emitter_singleton_1 = require("./emitter-singleton");
 /**
- * See documentation: https://devboldly.github.io/react-use-local-storage/useLocalStorageItem
+ * See documentation: https://devboldly.github.io/react-use-window-localstorage/useLocalStorageItem
  *
  * This hook gets and sets an item in [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) using the provided encode and decode functions.
  *
  * Features synchronization across hooks sharing the same key name.
  *
- * Hooks for [boolean](https://devboldly.github.io/react-use-local-storage/useLocalStorageBoolean), [number](https://devboldly.github.io/react-use-local-storage/useLocalStorageNumber), and [string](https://devboldly.github.io/react-use-local-storage/useLocalStorageString) primitives are available. There is also a [hook for objects](https://devboldly.github.io/react-use-local-storage/useLocalStorageObject) that uses [JSON string encoding](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
+ * Hooks for [boolean](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageBoolean), [number](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageNumber), and [string](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageString) primitives are available. There is also a [hook for objects](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageObject) that uses [JSON string encoding](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify).
  *
  * @param keyName - **Required.** Key name to use in localStorage.
  * @param defaultValueOptional - **Required.** Provide a default value when the key's value is not found in localStorage. Will be immediately written to localStorage if not present. Use `null` for no default.

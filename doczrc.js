@@ -5,7 +5,7 @@
  */
 const docsConfig = {
   /** The base URL the site will be deployed at. It should always start and end with a slash. */
-  base: '/react-use-local-storage/',
+  base: '/react-use-window-localstorage/',
   /** Define the source folder of your components. Only the files in this folder will be parsed. */
   src: './src',
   // /** Glob pattern used to find your files. By default, Docz finds all files inside the source folder that have a .mdx extension. */
@@ -15,7 +15,7 @@ const docsConfig = {
   // /** Specify the output directory for `docz build` */
   // dest: '.docz/dist',
   // /** The title for your site. This will be the prefix for all page titles and displayed in the sidebar in the default theme. */
-  // title: 'Project Name',
+  title: 'React Use Window localStorage',
   // /** The description for the site. It will be rendered as a <meta> tag in the page HTML. */
   // description: 'Project description.',
   /** This option is used if you need to import Typescript components inside your .mdx files. */
