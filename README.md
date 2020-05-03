@@ -32,6 +32,8 @@ Changes to localStorage are synchronized across all hooks automatically.
 
 > **What is localStorage?** The `localStorage` property allows you to store `{key: value}` string data that is saved across browser sessions. Data stored in `localStorage` has no expiration time.
 
+> For sessionStorage, check out sister project [react-use-window-sessionstorage](https://devboldly.github.io/react-use-window-sessionstorage).
+
 ### Features include:
 
 - **💪 Easily add `localStorage` support**
