@@ -20,6 +20,8 @@
 
 Read the **[official documentation](https://devboldly.github.io/react-use-window-localstorage/)**.
 
+[![Demo](./src/__docz__/images/demo.gif "Demo")](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageString#example)
+
 👁️ **[Live Demo](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageString#example)**
 
 ## Overview
