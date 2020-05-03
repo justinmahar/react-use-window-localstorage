@@ -1,5 +1,5 @@
 <h2 align="center">
-  <a href="https://github.com/devboldly/react-use-window-localstorage">React Use Window localStorage</a>
+  <a href="https://github.com/devboldly/react-use-window-localstorage">React Use Window.localStorage</a>
 </h2>
 <h3 align="center">
   React hooks for accessing the localStorage Web Storage API.
