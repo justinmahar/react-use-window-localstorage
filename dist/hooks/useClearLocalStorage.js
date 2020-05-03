@@ -10,7 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importStar(require("react"));
 var emitter_singleton_1 = require("./emitter-singleton");
 /**
- * See documentation: https://devboldly.github.io/react-use-window-localstorage/useClearLocalStorage
+ * See documentation: [useClearLocalStorage](https://devboldly.github.io/react-use-window-localstorage/useClearLocalStorage)
  *
  * This hook calls [localStorage.clear()](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) to clear all items from `localStorage`.
  *

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var useLocalStorageItem_1 = require("./useLocalStorageItem");
 /**
- * See documentation: https://devboldly.github.io/react-use-window-localstorage/useLocalStorageBoolean
+ * See documentation: [useLocalStorageBoolean](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageBoolean)
  *
  * This hook gets and sets a `boolean` in [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
  *
