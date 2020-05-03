@@ -3,7 +3,7 @@ import { getEmitterSingleton, clearEvent } from './emitter-singleton';
 import isStorageAvailable from './isStorageAvailable';
 
 /**
- * See documentation: https://devboldly.github.io/react-use-window-localstorage/useLocalStorageItem
+ * See documentation: [useLocalStorageItem](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageItem)
  *
  * This hook gets and sets an item in [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) using the provided encode and decode functions.
  *

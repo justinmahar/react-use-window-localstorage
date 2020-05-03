@@ -1,7 +1,7 @@
 import { defaultDecode, defaultEncode, LocalStorageItem, useLocalStorageItem } from './useLocalStorageItem';
 
 /**
- * See documentation: https://devboldly.github.io/react-use-window-localstorage/useLocalStorageObject
+ * See documentation: [useLocalStorageObject](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageObject)
  *
  * This hook gets and sets an `Object` in [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage). This includes arrays.
  *
