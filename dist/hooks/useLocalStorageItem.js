@@ -33,8 +33,7 @@ function useLocalStorageItem(keyName, defaultValue, encode, decode) {
     var _b = React.useState(false), shouldPush = _b[0], setShouldPush = _b[1];
     var _c = React.useState(null), itemString = _c[0], setItemString = _c[1];
     var _d = React.useState(true), available = _d[0], setAvailable = _d[1];
-    var _e = React.useState(new Date().getTime()), setRenderTime = _e[1];
-    console.log('RENDER val', itemString);
+    var _e = React.useState(new Date().getTime()), renderTime = _e[0], setRenderTime = _e[1];
     React.useEffect(function () {
         // Synchronize value with localStorage on first render
         if (loading) {
@@ -68,30 +67,26 @@ function useLocalStorageItem(keyName, defaultValue, encode, decode) {
             if (shouldPush) {
                 setShouldPush(false);
                 if (itemString !== null) {
-                    console.log('setting shouldPush false, setting in localstorage:', itemString);
                     localStorage.setItem(keyName, itemString);
                 }
                 else {
                     // Remove when setting to null
                     localStorage.removeItem(keyName);
                 }
-                console.log('emitting to all hooks', keyName, itemString);
                 // Notify all hooks that have already been rendered.
                 emitter_singleton_1.getEmitterSingleton().emit(keyName, itemString);
             }
             // Otherwise, pull the latest value from localStorage
             else {
-                console.log('pulling in latest value:', localStorage.getItem(keyName));
                 setItemString(localStorage.getItem(keyName));
             }
         }
-    }, [keyName, shouldPush, decode, defaultValue, encode, available, loading, itemString]);
+    }, [itemString, keyName, loading, shouldPush, renderTime]);
     // Emitter handler (synchronizes hooks)
     React.useEffect(function () {
         var aborted = false;
         var itemChangeListener = function (itemString) {
             if (!aborted) {
-                console.log('Setting render time to rerender');
                 setRenderTime(new Date().getTime());
             }
         };
@@ -100,11 +95,9 @@ function useLocalStorageItem(keyName, defaultValue, encode, decode) {
                 setLoading(true);
             }
         };
-        console.log('Adding listeners', keyName, 'current val:', itemString);
         emitter_singleton_1.getEmitterSingleton().on(keyName, itemChangeListener);
         emitter_singleton_1.getEmitterSingleton().on(emitter_singleton_1.clearEvent, clearListener);
         return function () {
-            console.log('Removing listeners', keyName, 'current val:', itemString);
             emitter_singleton_1.getEmitterSingleton().off(keyName, itemChangeListener);
             emitter_singleton_1.getEmitterSingleton().off(emitter_singleton_1.clearEvent, clearListener);
             aborted = true;
@@ -118,7 +111,6 @@ function useLocalStorageItem(keyName, defaultValue, encode, decode) {
             else {
                 setItemString(encode(newVal));
             }
-            console.log('Setting shouldPush to true');
             setShouldPush(true);
         }
         catch (e) {
