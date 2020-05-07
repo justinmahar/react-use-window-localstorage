@@ -1,6 +1,6 @@
 {
   "name": "react-use-window-localstorage",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "author": "DevBoldly <devboldly@gmail.com>",
   "description": "React hooks for accessing the localStorage Web Storage API.",
   "homepage": "https://devboldly.github.io/react-use-window-localstorage/",
