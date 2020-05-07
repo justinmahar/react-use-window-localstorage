@@ -26,9 +26,7 @@ export function useLocalStorageItem<T>(
   const [shouldPush, setShouldPush] = React.useState<boolean>(false);
   const [itemString, setItemString] = React.useState<string | null>(null);
   const [available, setAvailable] = React.useState(true);
-  const [, setRenderTime] = React.useState(new Date().getTime());
-
-  console.log('RENDER val', itemString);
+  const [renderTime, setRenderTime] = React.useState(new Date().getTime());
 
   React.useEffect(() => {
     // Synchronize value with localStorage on first render
@@ -62,30 +60,26 @@ export function useLocalStorageItem<T>(
       if (shouldPush) {
         setShouldPush(false);
         if (itemString !== null) {
-          console.log('setting shouldPush false, setting in localstorage:', itemString);
           localStorage.setItem(keyName, itemString);
         } else {
           // Remove when setting to null
           localStorage.removeItem(keyName);
         }
-        console.log('emitting to all hooks', keyName, itemString);
         // Notify all hooks that have already been rendered.
         getEmitterSingleton().emit(keyName, itemString);
       }
       // Otherwise, pull the latest value from localStorage
       else {
-        console.log('pulling in latest value:', localStorage.getItem(keyName));
         setItemString(localStorage.getItem(keyName));
       }
     }
-  }, [keyName, shouldPush, decode, defaultValue, encode, available, loading, itemString]);
+  }, [itemString, keyName, loading, shouldPush, renderTime]);
 
   // Emitter handler (synchronizes hooks)
   React.useEffect(() => {
     let aborted = false;
     const itemChangeListener = (itemString: string | null): void => {
       if (!aborted) {
-        console.log('Setting render time to rerender');
         setRenderTime(new Date().getTime());
       }
     };
@@ -94,11 +88,9 @@ export function useLocalStorageItem<T>(
         setLoading(true);
       }
     };
-    console.log('Adding listeners', keyName, 'current val:', itemString);
     getEmitterSingleton().on(keyName, itemChangeListener);
     getEmitterSingleton().on(clearEvent, clearListener);
     return () => {
-      console.log('Removing listeners', keyName, 'current val:', itemString);
       getEmitterSingleton().off(keyName, itemChangeListener);
       getEmitterSingleton().off(clearEvent, clearListener);
       aborted = true;
@@ -113,7 +105,6 @@ export function useLocalStorageItem<T>(
         } else {
           setItemString(encode(newVal));
         }
-        console.log('Setting shouldPush to true');
         setShouldPush(true);
       } catch (e) {
         console.error(e);
