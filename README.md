@@ -151,13 +151,12 @@ Provide `null` for no default value.
 All hooks provide additional features in their return arrays, should you be interested:
 
 ```jsx
-const [value, setValue, loading, available, reset, restore] = useLocalStorageString('favColor', 'cyan');
+const [value, setValue, loading, available, reset] = useLocalStorageString('favColor', 'cyan');
 ```
 
 - A `loading` value of `true` indicates that the value is being loaded from localStorage.
 - An `available` value of `true` indicates that `localStorage` is supported and available for use. 
 - The `reset()` function sets the value back to the provided default, or `null` if none was given.
-- The `restore()` function retrieves the latest value from localStorage. Use this if the localStorage value changes outside of this hook and you need to restore it to the latest.
 
 ### Clearing `localStorage`
 

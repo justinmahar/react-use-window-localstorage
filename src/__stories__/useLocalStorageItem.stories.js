@@ -18,71 +18,45 @@ export default {
 // Needed to wrap the hook and give it visual representation.
 const HookComponent = () => {
   const defaultCheese = 'Cheddar';
-  const [
-    favCheese,
-    setFavCheese,
-    favCheeseLoading,
-    favCheeseAvailable,
-    resetFavCheese,
-    restoreFavCheese,
-  ] = useLocalStorageString('favCheese', defaultCheese);
-  const [
-    favCheese2,
-    setFavCheese2,
-    favCheese2Loading,
-    favCheese2Available,
-    resetFavCheese2,
-    restoreFavCheese2,
-  ] = useLocalStorageString('favCheese', defaultCheese);
-  const [
-    favCheese3,
-    setFavCheese3,
-    favCheese3Loading,
-    favCheese3Available,
-    resetFavCheese3,
-    restoreFavCheese3,
-  ] = useLocalStorageString('favCheese', defaultCheese);
+  const [favCheese, setFavCheese, favCheeseLoading, favCheeseAvailable, resetFavCheese] = useLocalStorageString(
+    'favCheese',
+    defaultCheese
+  );
+  const [favCheese2, setFavCheese2, favCheese2Loading, favCheese2Available, resetFavCheese2] = useLocalStorageString(
+    'favCheese',
+    defaultCheese
+  );
+  const [favCheese3, setFavCheese3, favCheese3Loading, favCheese3Available, resetFavCheese3] = useLocalStorageString(
+    'favCheese',
+    defaultCheese
+  );
 
-  const [
-    favAnimal,
-    setFavAnimal,
-    favAnimalLoading,
-    favAnimalAvailable,
-    resetFavAnimal,
-    restoreFavAnimal,
-  ] = useLocalStorageString('favAnimal');
+  const [favAnimal, setFavAnimal, favAnimalLoading, favAnimalAvailable, resetFavAnimal] = useLocalStorageString(
+    'favAnimal'
+  );
   const [
     numChickens,
     setNumChickens,
     numChickensLoading,
     numChickensAvailable,
     resetNumChickens,
-    restoreNumChickens,
   ] = useLocalStorageNumber('numChickens', 3);
-  const [
-    isAwesome,
-    setIsAwesome,
-    isAwesomeLoading,
-    isAwesomeAvailable,
-    resetIsAwesome,
-    restoreIsAwesome,
-  ] = useLocalStorageBoolean('isAwesome', true);
-  const [
-    inventory,
-    setInventory,
-    inventoryLoading,
-    inventoryAvailable,
-    resetInventory,
-    restoreInventory,
-  ] = useLocalStorageObject('inventory', {
-    books: [
-      { title: 'Adventures of Link', ISBN: '123-4123-123' },
-      { title: 'Potion Recipes', ISBN: '39138-23923-23' },
-    ],
-    swordCount: 1,
-    inventoryFull: false,
-    owner: 'Zelda',
-  });
+  const [isAwesome, setIsAwesome, isAwesomeLoading, isAwesomeAvailable, resetIsAwesome] = useLocalStorageBoolean(
+    'isAwesome',
+    true
+  );
+  const [inventory, setInventory, inventoryLoading, inventoryAvailable, resetInventory] = useLocalStorageObject(
+    'inventory',
+    {
+      books: [
+        { title: 'Adventures of Link', ISBN: '123-4123-123' },
+        { title: 'Potion Recipes', ISBN: '39138-23923-23' },
+      ],
+      swordCount: 1,
+      inventoryFull: false,
+      owner: 'Zelda',
+    }
+  );
 
   const clearLocalStorage = useClearLocalStorage();
 
@@ -101,7 +75,6 @@ const HookComponent = () => {
         <button onClick={() => resetFavCheese()} disabled={favCheese === defaultCheese}>
           Reset
         </button>{' '}
-        <button onClick={() => restoreFavCheese()}>Restore</button>{' '}
       </div>
       <div>
         Favorite Cheese 2 (default Cheddar):{' '}
@@ -116,7 +89,6 @@ const HookComponent = () => {
         <button onClick={() => resetFavCheese2()} disabled={favCheese2 === defaultCheese}>
           Reset
         </button>{' '}
-        <button onClick={() => restoreFavCheese2()}>Restore</button>{' '}
       </div>
       <div>
         Favorite Cheese 3 (default Cheddar):{' '}
@@ -131,7 +103,6 @@ const HookComponent = () => {
         <button onClick={() => resetFavCheese3()} disabled={favCheese3 === defaultCheese}>
           Reset
         </button>{' '}
-        <button onClick={() => restoreFavCheese3()}>Restore</button>{' '}
       </div>
       <div>
         Favorite Animal (no default): {favAnimalLoading ? 'Loading...' : favAnimal ? favAnimal : <code>null</code>}
@@ -145,7 +116,6 @@ const HookComponent = () => {
         <button onClick={() => resetFavAnimal()} disabled={favAnimal === null}>
           Reset
         </button>{' '}
-        <button onClick={() => restoreFavAnimal()}>Restore</button>{' '}
       </div>
       <div>
         Number of chickens (default 3):{' '}
@@ -160,7 +130,6 @@ const HookComponent = () => {
         <button onClick={() => resetNumChickens()} disabled={numChickens === 3}>
           Reset
         </button>{' '}
-        <button onClick={() => restoreNumChickens()}>Restore</button>{' '}
       </div>
       <div>
         Awesome (default true)?{' '}
@@ -174,7 +143,6 @@ const HookComponent = () => {
         <button onClick={() => resetIsAwesome()} disabled={isAwesome !== null && isAwesome}>
           Reset
         </button>{' '}
-        <button onClick={() => restoreIsAwesome()}>Restore</button>{' '}
       </div>
       <div>
         Inventory (default provided):{' '}
@@ -199,7 +167,6 @@ const HookComponent = () => {
             Set to <code>null</code>
           </button>{' '}
           <button onClick={() => resetInventory()}>Reset</button>{' '}
-          <button onClick={() => restoreInventory()}>Restore</button>{' '}
         </div>
       </div>
       <div>
@@ -232,45 +199,6 @@ const HookComponent = () => {
         <p>
           Local Storage uses <code>null</code> to represent a missing value, so setting a value to <code>null</code>{' '}
           will also cause it to fall back to a default, if present.
-        </p>
-        <p>
-          If something changes localStorage outside the hook (such as calling <code>localStorage.clear()</code> to clear
-          all keys/values), React has no idea this is happening. You&apos;ll need a way to restore the hook items to the
-          actual state in localStorage. To accomplish this, you can use the <code>restore</code> function returned by
-          the hook.
-        </p>
-        <p>
-          The following buttons change localStorage outside of the hook (React can&apos;t see these changes):
-          <br />
-          <button onClick={() => (localStorage ? localStorage.clear() : undefined)}>
-            <code>localStorage.clear()</code>
-          </button>{' '}
-          <button onClick={() => (localStorage ? localStorage.setItem('favCheese', 'Gouda') : undefined)}>
-            Set Cheese
-          </button>{' '}
-          <button onClick={() => (localStorage ? localStorage.setItem('favAnimal', 'Koala') : undefined)}>
-            Set Animal
-          </button>
-        </p>
-      </div>
-      <div>
-        <p>
-          This button restores all hooks from localStorage using <code>restore</code>:<br />
-          <button
-            onClick={() =>
-              localStorage
-                ? restoreFavCheese() ||
-                  restoreFavCheese2() ||
-                  restoreFavCheese3() ||
-                  restoreFavAnimal() ||
-                  restoreNumChickens() ||
-                  restoreIsAwesome() ||
-                  restoreInventory()
-                : undefined
-            }
-          >
-            Restore All
-          </button>{' '}
         </p>
       </div>
     </>

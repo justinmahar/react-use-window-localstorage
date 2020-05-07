@@ -24,9 +24,9 @@ export function useLocalStorageItem<T>(
 ): LocalStorageItem<T> {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [shouldPush, setShouldPush] = React.useState<boolean>(false);
-  const [shouldPull, setShouldPull] = React.useState<boolean>(false);
-  const [value, setItemValue] = React.useState<LocalStorageValue<T>>(defaultValue);
+  const [itemString, setItemString] = React.useState<string | null>(null);
   const [available, setAvailable] = React.useState(true);
+  const [, setRenderTime] = React.useState(new Date().getTime());
 
   React.useEffect(() => {
     // Synchronize value with localStorage on first render
@@ -34,64 +34,53 @@ export function useLocalStorageItem<T>(
       setLoading(false);
       // Make sure localStorage is actually available
       if (isStorageAvailable()) {
-        // Get the item
-        const retrievedLocalStorageState = localStorage.getItem(keyName);
+        const currentItemString = localStorage.getItem(keyName);
         // If on first render we actually find a value, use it.
-        if (retrievedLocalStorageState !== null) {
+        if (currentItemString !== null) {
+          setItemString(localStorage.getItem(keyName));
+        }
+        // Else if we didn't find a value but a default one was provided, set it.
+        else if (defaultValue !== null) {
           try {
-            // Set to decoded value, or fall back to default when null
-            setItemValue(retrievedLocalStorageState !== null ? decode(retrievedLocalStorageState) : defaultValue);
+            setItemString(encode(defaultValue));
+            setShouldPush(true);
           } catch (e) {
             console.error(e);
           }
-        }
-        // Else if we didn't find a value but a default one was provided, push it.
-        else if (defaultValue !== null) {
-          setShouldPush(true);
         }
       } else {
         setAvailable(false);
       }
     }
-  }, [keyName, loading, defaultValue, decode, available]);
+  }, [keyName, loading, defaultValue, decode, available, encode]);
 
   React.useEffect(() => {
     if (!loading) {
-      // Pull value from localStorage
-      if (shouldPull) {
-        try {
-          const retrievedLocalStorageState = localStorage.getItem(keyName);
-          setShouldPull(false);
-          // Set to decoded value, or fall back to default when null
-          setItemValue(retrievedLocalStorageState !== null ? decode(retrievedLocalStorageState) : defaultValue);
-        } catch (e) {
-          console.error(e);
-        }
-      }
       // Push value to localStorage
-      else if (shouldPush) {
+      if (shouldPush) {
         setShouldPush(false);
-        if (value !== null) {
-          try {
-            const encodedVal = encode(value);
-            localStorage.setItem(keyName, encodedVal);
-          } catch (e) {
-            console.error(e);
-          }
+        if (itemString !== null) {
+          localStorage.setItem(keyName, itemString);
         } else {
           // Remove when setting to null
           localStorage.removeItem(keyName);
         }
+        // Notify all hooks that have already been rendered.
+        getEmitterSingleton().emit(keyName, itemString);
+      }
+      // Otherwise, pull the latest value from localStorage
+      else {
+        setItemString(localStorage.getItem(keyName));
       }
     }
-  }, [keyName, shouldPull, shouldPush, decode, defaultValue, value, encode, available, loading]);
+  }, [keyName, shouldPush, decode, defaultValue, encode, available, loading, itemString]);
 
   // Emitter handler (synchronizes hooks)
   React.useEffect(() => {
     let aborted = false;
-    const itemChangeListener = (value: LocalStorageValue<T>): void => {
+    const itemChangeListener = (itemString: string | null): void => {
       if (!aborted) {
-        setItemValue(value);
+        setRenderTime(new Date().getTime());
       }
     };
     const clearListener = (): void => {
@@ -110,23 +99,27 @@ export function useLocalStorageItem<T>(
 
   const setValue = React.useCallback(
     (newVal: LocalStorageValue<T>): void => {
-      const newValOrDefault = newVal !== null ? newVal : defaultValue;
-      setItemValue(newValOrDefault);
-      setShouldPush(true);
-      getEmitterSingleton().emit(keyName, newVal);
+      try {
+        if (newVal === null) {
+          setItemString(null);
+        } else {
+          setItemString(encode(newVal));
+        }
+        setShouldPush(true);
+      } catch (e) {
+        console.error(e);
+      }
     },
-    [defaultValue, keyName]
+    [encode]
   );
-
-  const restore = React.useCallback((): void => {
-    setShouldPull(true);
-  }, [setShouldPull]);
 
   const reset = React.useCallback((): void => {
     setValue(defaultValue);
   }, [defaultValue, setValue]);
 
-  return [value, setValue, loading, available, reset, restore];
+  const value = itemString !== null ? decode(itemString) : defaultValue;
+
+  return [value, setValue, loading, available, reset];
 }
 export type LocalStorageValue<T> = T | null;
 
@@ -135,7 +128,6 @@ export type LocalStorageItem<T> = [
   (value: LocalStorageValue<T>) => void,
   boolean,
   boolean,
-  () => void,
   () => void
 ];
 
