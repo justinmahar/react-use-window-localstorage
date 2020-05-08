@@ -55,7 +55,7 @@ export function useLocalStorageItem<T>(
   }, [keyName, loading, defaultValue, decode, available, encode]);
 
   React.useEffect(() => {
-    if (!loading) {
+    if (!loading && available) {
       // Push value to localStorage
       if (shouldPush) {
         setShouldPush(false);
@@ -68,12 +68,18 @@ export function useLocalStorageItem<T>(
         // Notify all hooks that have already been rendered.
         getEmitterSingleton().emit(keyName, itemString);
       }
-      // Otherwise, pull the latest value from localStorage
-      else {
-        setItemString(localStorage.getItem(keyName));
+    }
+  }, [itemString, keyName, loading, shouldPush, available]);
+
+  React.useEffect(() => {
+    if (!loading && available && !shouldPush) {
+      // Check if the latest value from localStorage is different from current value
+      const trueValue = localStorage.getItem(keyName);
+      if (itemString !== trueValue) {
+        setItemString(trueValue);
       }
     }
-  }, [itemString, keyName, loading, shouldPush, renderTime]);
+  });
 
   // Emitter handler (synchronizes hooks)
   React.useEffect(() => {
