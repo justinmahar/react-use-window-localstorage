@@ -62,7 +62,7 @@ function useLocalStorageItem(keyName, defaultValue, encode, decode) {
         }
     }, [keyName, loading, defaultValue, decode, available, encode]);
     React.useEffect(function () {
-        if (!loading) {
+        if (!loading && available) {
             // Push value to localStorage
             if (shouldPush) {
                 setShouldPush(false);
@@ -76,12 +76,17 @@ function useLocalStorageItem(keyName, defaultValue, encode, decode) {
                 // Notify all hooks that have already been rendered.
                 emitter_singleton_1.getEmitterSingleton().emit(keyName, itemString);
             }
-            // Otherwise, pull the latest value from localStorage
-            else {
-                setItemString(localStorage.getItem(keyName));
+        }
+    }, [itemString, keyName, loading, shouldPush, available]);
+    React.useEffect(function () {
+        if (!loading && available && !shouldPush) {
+            // Check if the latest value from localStorage is different from current value
+            var trueValue = localStorage.getItem(keyName);
+            if (itemString !== trueValue) {
+                setItemString(trueValue);
             }
         }
-    }, [itemString, keyName, loading, shouldPush, renderTime]);
+    });
     // Emitter handler (synchronizes hooks)
     React.useEffect(function () {
         var aborted = false;
