@@ -163,7 +163,7 @@ const [value, setValue, loading, available, reset] = useLocalStorageString('favC
 ### Clearing `localStorage`
 
 ```jsx
-import { useClear } from 'react-use-window-localstorage';
+import { useClearLocalStorage } from 'react-use-window-localstorage';
 ```
 
 ```jsx
