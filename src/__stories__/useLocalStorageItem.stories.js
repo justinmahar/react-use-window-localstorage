@@ -20,19 +20,19 @@ const HookComponent = () => {
   const defaultCheese = 'Cheddar';
   const [favCheese, setFavCheese, favCheeseLoading, favCheeseAvailable, resetFavCheese] = useLocalStorageString(
     'favCheese',
-    defaultCheese
+    defaultCheese,
   );
   const [favCheese2, setFavCheese2, favCheese2Loading, favCheese2Available, resetFavCheese2] = useLocalStorageString(
     'favCheese',
-    defaultCheese
+    defaultCheese,
   );
   const [favCheese3, setFavCheese3, favCheese3Loading, favCheese3Available, resetFavCheese3] = useLocalStorageString(
     'favCheese',
-    defaultCheese
+    defaultCheese,
   );
 
   const [favAnimal, setFavAnimal, favAnimalLoading, favAnimalAvailable, resetFavAnimal] = useLocalStorageString(
-    'favAnimal'
+    'favAnimal',
   );
   const [
     numChickens,
@@ -43,7 +43,7 @@ const HookComponent = () => {
   ] = useLocalStorageNumber('numChickens', 3);
   const [isAwesome, setIsAwesome, isAwesomeLoading, isAwesomeAvailable, resetIsAwesome] = useLocalStorageBoolean(
     'isAwesome',
-    true
+    true,
   );
   const [inventory, setInventory, inventoryLoading, inventoryAvailable, resetInventory] = useLocalStorageObject(
     'inventory',
@@ -55,7 +55,7 @@ const HookComponent = () => {
       swordCount: 1,
       inventoryFull: false,
       owner: 'Zelda',
-    }
+    },
   );
 
   const clearLocalStorage = useClearLocalStorage();
@@ -189,7 +189,7 @@ const HookComponent = () => {
         </p>
       </div>
       <div>
-        Clear all using hook (synchronizes): <button onClick={e => clearLocalStorage()}>Clear</button>
+        Clear all using hook (synchronizes): <button onClick={(e) => clearLocalStorage()}>Clear</button>
       </div>
       <div>
         <p>

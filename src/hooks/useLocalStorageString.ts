@@ -15,6 +15,6 @@ export function useLocalStorageString(keyName: string, defaultValue: string | nu
     keyName,
     defaultValue,
     (value: string) => value,
-    itemString => itemString
+    (itemString) => itemString,
   );
 }

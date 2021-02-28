@@ -4,7 +4,7 @@ import { defaultDecode, defaultEncode, useLocalStorageItem } from '../hooks/useL
 describe('useLocalStorageItem Hook', () => {
   test('should run without crashing', () => {
     const { result } = renderHook(() =>
-      useLocalStorageItem('message', 'Son of a submariner!', defaultEncode, defaultDecode)
+      useLocalStorageItem('message', 'Son of a submariner!', defaultEncode, defaultDecode),
     );
     expect(result.error).toBe(undefined);
   });

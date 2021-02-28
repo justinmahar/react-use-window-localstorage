@@ -12,7 +12,7 @@ import { LocalStorageItem, useLocalStorageItem, defaultEncode, defaultDecode } f
  */
 export function useLocalStorageBoolean(
   keyName: string,
-  defaultValue: boolean | null = null
+  defaultValue: boolean | null = null,
 ): LocalStorageItem<boolean> {
   return useLocalStorageItem(keyName, defaultValue, defaultEncode, defaultDecode);
 }
