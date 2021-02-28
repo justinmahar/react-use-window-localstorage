@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.useLocalStorageObject = void 0;
 var useLocalStorageItem_1 = require("./useLocalStorageItem");
 /**
  * See documentation: [useLocalStorageObject](https://justinmahar.github.io/react-use-window-localstorage/useLocalStorageObject)
@@ -16,14 +17,7 @@ var useLocalStorageItem_1 = require("./useLocalStorageItem");
  * @param defaultValue - Optional. Provide a default `Object` value when the key's value is not found in localStorage. Will be immediately written to localStorage if not present. Use `null` for no default.
  */
 function useLocalStorageObject(keyName, defaultValue) {
-  if (defaultValue === void 0) {
-    defaultValue = null;
-  }
-  return useLocalStorageItem_1.useLocalStorageItem(
-    keyName,
-    defaultValue,
-    useLocalStorageItem_1.defaultEncode,
-    useLocalStorageItem_1.defaultDecode
-  );
+    if (defaultValue === void 0) { defaultValue = null; }
+    return useLocalStorageItem_1.useLocalStorageItem(keyName, defaultValue, useLocalStorageItem_1.defaultEncode, useLocalStorageItem_1.defaultDecode);
 }
 exports.useLocalStorageObject = useLocalStorageObject;
