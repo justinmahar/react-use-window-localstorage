@@ -1,7 +1,7 @@
 import { LocalStorageItem, useLocalStorageItem, defaultEncode, defaultDecode } from './useLocalStorageItem';
 
 /**
- * See documentation: [useLocalStorageNumber](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageNumber)
+ * See documentation: [useLocalStorageNumber](https://justinmahar.github.io/react-use-window-localstorage/useLocalStorageNumber)
  *
  * This hook gets and sets a `number` in [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
  *

@@ -1,5 +1,5 @@
 /**
- * See documentation: [useClearLocalStorage](https://devboldly.github.io/react-use-window-localstorage/useClearLocalStorage)
+ * See documentation: [useClearLocalStorage](https://justinmahar.github.io/react-use-window-localstorage/useClearLocalStorage)
  *
  * This hook calls [localStorage.clear()](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) to clear all items from `localStorage`.
  *

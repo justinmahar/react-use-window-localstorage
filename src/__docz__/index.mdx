@@ -6,33 +6,41 @@ route: /
 # NOTE: Menu ordering is configured in doczrc.js
 ---
 
-import { Playground } from 'docz';
+import { Playground } from "docz";
 
-import { SvgIcon } from 'dboldly-react-tools';
-import githubSvg from '../__docz__/images/github.svg';
-import demoGif from '../__docz__/images/demo.gif';
+import { SvgIcon } from "dboldly-react-tools";
+import githubSvg from "../__docz__/images/github.svg";
+import demoGif from "../__docz__/images/demo.gif";
 
-<div style={{
-	display: 'flex',
-	alignItems: 'center',
-}}>
+<div
+  style={{
+    display: "flex",
+    alignItems: "center",
+  }}
+>
   <div>
     <h1>React Use Window.localStorage</h1>
   </div>
   <div>
-    <a href="https://github.com/devboldly/react-use-window-localstorage/" target="_blank" rel="noopener noreferrer">
-      <SvgIcon src={githubSvg} size={28} style={{ margin: '0 0 0 20px' }} />
+    <a
+      href="https://github.com/justinmahar/react-use-window-localstorage/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <SvgIcon src={githubSvg} size={28} style={{ margin: "0 0 0 20px" }} />
     </a>
   </div>
 </div>
 
 **React hooks for accessing the localStorage [Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API).**
 
-<a href="https://devboldly.github.io/react-use-window-localstorage/useLocalStorageString#example"><img src={demoGif} /></a>
+<a href="https://justinmahar.github.io/react-use-window-localstorage/useLocalStorageString#example">
+  <img src={demoGif} />
+</a>
 
 👁️ **[Live Demo](/useLocalStorageString#example)**
 
-*For sessionStorage, see [react-use-window-sessionstorage](https://devboldly.github.io/react-use-window-sessionstorage).*
+_For sessionStorage, see [react-use-window-sessionstorage](https://justinmahar.github.io/react-use-window-sessionstorage)._
 
 ## Overview
 
@@ -44,7 +52,7 @@ Changes to localStorage are synchronized across all hooks automatically.
 
 > **What is localStorage?** The `localStorage` property allows you to store `{key: value}` string data that is saved across browser sessions. Data stored in `localStorage` has no expiration time.
 
-> For sessionStorage, check out the companion project [react-use-window-sessionstorage](https://devboldly.github.io/react-use-window-sessionstorage).
+> For sessionStorage, check out the companion project [react-use-window-sessionstorage](https://justinmahar.github.io/react-use-window-sessionstorage).
 
 ### Features include:
 
@@ -76,14 +84,14 @@ npm i react-use-window-localstorage
 Use the [useLocalStorageString](/useLocalStorageString) hook:
 
 ```jsx
-import { useLocalStorageString } from 'react-use-window-localstorage';
+import { useLocalStorageString } from "react-use-window-localstorage";
 ```
 
 In your function component:
 
 ```jsx
-const defaultValue = 'cyan';
-const [value, setValue] = useLocalStorageString('favColor', defaultValue);
+const defaultValue = "cyan";
+const [value, setValue] = useLocalStorageString("favColor", defaultValue);
 ```
 
 ### Storing Objects
@@ -91,14 +99,14 @@ const [value, setValue] = useLocalStorageString('favColor', defaultValue);
 Use the [useLocalStorageObject](/useLocalStorageObject) hook:
 
 ```jsx
-import { useLocalStorageObject } from 'react-use-window-localstorage';
+import { useLocalStorageObject } from "react-use-window-localstorage";
 ```
 
 In your function component:
 
 ```jsx
-const defaultValue = { a: 'hello', b: 123 };
-const [value, setValue] = useLocalStorageObject('myObj', defaultValue);
+const defaultValue = { a: "hello", b: 123 };
+const [value, setValue] = useLocalStorageObject("myObj", defaultValue);
 ```
 
 Note that your objects must be compatible with [JSON.stringify()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify). Use [useLocalStorageItem](/useLocalStorageItem) otherwise.
@@ -108,14 +116,14 @@ Note that your objects must be compatible with [JSON.stringify()](https://develo
 Use the [useLocalStorageBoolean](/useLocalStorageBoolean) hook:
 
 ```jsx
-import { useLocalStorageBoolean } from 'react-use-window-localstorage';
+import { useLocalStorageBoolean } from "react-use-window-localstorage";
 ```
 
 In your function component:
 
 ```jsx
 const defaultValue = true;
-const [value, setValue] = useLocalStorageBoolean('swordEquipped', defaultValue);
+const [value, setValue] = useLocalStorageBoolean("swordEquipped", defaultValue);
 ```
 
 ### Storing Numbers
@@ -123,14 +131,17 @@ const [value, setValue] = useLocalStorageBoolean('swordEquipped', defaultValue);
 Use the [useLocalStorageNumber](/useLocalStorageNumber) hook:
 
 ```jsx
-import { useLocalStorageNumber } from 'react-use-window-localstorage';
+import { useLocalStorageNumber } from "react-use-window-localstorage";
 ```
 
 In your function component:
 
 ```jsx
 const defaultValue = 3.14159;
-const [value, setValue] = useLocalStorageNumber('importantNumber', defaultValue);
+const [value, setValue] = useLocalStorageNumber(
+  "importantNumber",
+  defaultValue
+);
 ```
 
 > Note: All value defaults are optional. Hooks will return `null` if none is provided.
@@ -142,16 +153,21 @@ If you'd like to store something other than the data types above, define your ow
 Here's a starting point:
 
 ```jsx
-import { useLocalStorageItem } from 'react-use-window-localstorage';
+import { useLocalStorageItem } from "react-use-window-localstorage";
 ```
 
 In your function component:
 
 ```jsx
-const defaultValue = 'something custom';
-const encode = value => JSON.stringify(value);
-const decode = itemString => JSON.parse(itemString);
-const [value, setValue] = useLocalStorageItem('name', defaultValue, encode, decode);
+const defaultValue = "something custom";
+const encode = (value) => JSON.stringify(value);
+const decode = (itemString) => JSON.parse(itemString);
+const [value, setValue] = useLocalStorageItem(
+  "name",
+  defaultValue,
+  encode,
+  decode
+);
 ```
 
 Provide `null` for no default value.
@@ -161,24 +177,27 @@ Provide `null` for no default value.
 All hooks provide additional features in their return arrays, should you be interested:
 
 ```jsx
-const [value, setValue, loading, available, reset] = useLocalStorageString('favColor', 'cyan');
+const [value, setValue, loading, available, reset] = useLocalStorageString(
+  "favColor",
+  "cyan"
+);
 ```
 
 - A `loading` value of `true` indicates that the value is being loaded from localStorage.
-- An `available` value of `true` indicates that `localStorage` is supported and available for use. 
+- An `available` value of `true` indicates that `localStorage` is supported and available for use.
 - The `reset()` function sets the value back to the provided default, or `null` if none was given.
 
 ### Clearing `localStorage`
 
 ```jsx
-import { useClearLocalStorage } from 'react-use-window-localstorage';
+import { useClearLocalStorage } from "react-use-window-localstorage";
 ```
 
 ```jsx
 const clearLocalStorage = useClearLocalStorage();
 ```
 
-Call `clearLocalStorage()` to clear all values in localStorage using [localStorage.clear()](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) 
+Call `clearLocalStorage()` to clear all values in localStorage using [localStorage.clear()](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
 and reset all hooks to their defaults (or `null` if none provided).
 
 ## TypeScript
@@ -195,6 +214,6 @@ For major changes, open an issue first to discuss what you'd like to change.
 
 See [Kindling](https://tinyurl.com/kindlingscripts) for npm script documentation.
 
-## ⭐ Found It Helpful? [Star It!](https://github.com/devboldly/react-use-window-localstorage/stargazers)
+## ⭐ Found It Helpful? [Star It!](https://github.com/justinmahar/react-use-window-localstorage/stargazers)
 
-If you found this project helpful, let the community know by giving it a [star](https://github.com/devboldly/react-use-window-localstorage/stargazers): [👉⭐](https://github.com/devboldly/react-use-window-localstorage/stargazers)
+If you found this project helpful, let the community know by giving it a [star](https://github.com/justinmahar/react-use-window-localstorage/stargazers): [👉⭐](https://github.com/justinmahar/react-use-window-localstorage/stargazers)

@@ -1,6 +1,6 @@
 import { LocalStorageItem } from './useLocalStorageItem';
 /**
- * See documentation: [useLocalStorageString](https://devboldly.github.io/react-use-window-localstorage/useLocalStorageString)
+ * See documentation: [useLocalStorageString](https://justinmahar.github.io/react-use-window-localstorage/useLocalStorageString)
  *
  * This hook gets and sets a `string` in [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
  *
