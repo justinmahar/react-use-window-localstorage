@@ -1,3 +1,7 @@
+# ⛔️ DEPRECATION NOTICE
+
+⛔️ This package is deprecated. You can use the `useLocalStorage` hook in [`react-storage-complete`](https://github.com/justinmahar/react-storage-complete) instead.
+
 <h2 align="center">
   <a href="https://github.com/justinmahar/react-use-window-localstorage">React Use Window.localStorage</a>
 </h2>

@@ -2,7 +2,7 @@
   "name": "react-use-window-localstorage",
   "version": "1.0.17",
   "author": "Justin Mahar <contact@justinmahar.com>",
-  "description": "React hooks for accessing the localStorage Web Storage API.",
+  "description": "[⛔️ DEPRECATED] React hooks for accessing the localStorage Web Storage API.",
   "homepage": "https://justinmahar.github.io/react-use-window-localstorage/",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
